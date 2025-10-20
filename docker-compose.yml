@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: spring-course-postgres
+    environment:
+      POSTGRES_DB: springcourse
+      POSTGRES_USER: springcourse
+      POSTGRES_PASSWORD: springcourse123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./spring_course_postgres.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - spring-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U springcourse"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring-course-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/springcourse
+      SPRING_DATASOURCE_USERNAME: springcourse
+      SPRING_DATASOURCE_PASSWORD: springcourse123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_JPA_SHOW_SQL: "true"
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-network
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+
+networks:
+  spring-network:
+    driver: bridge
