@@ -95,8 +95,8 @@ CREATE UNIQUE INDEX uk_user_username ON "user"(username);
 -- Password for 'user': user
 -- Password for 'admin': admin
 INSERT INTO "user" (id, password, role, username) VALUES
-(1, '$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6', 'USER', 'user'),
-(2, '$2a$08$bCCcGjB03eulCWt3CY0AZew2rVzXFyouUolL5dkL/pBgFkUH9O4J2', 'ADMIN', 'admin');
+(1, '$2a$10$3c04Y83e0kuxuzeOkVq8mOqwdmSM4lkh3exsgCoJTCF3ayQNHUUrW', 'USER', 'user'),
+(2, '$2a$10$RdDx/Phkm.7Br5ezdnp/rewjRG5WCBSd3CGxv2EwPbtmANqneWrui', 'ADMIN', 'admin');
 
 -- Update sequence for user
 SELECT setval('user_id_seq', (SELECT MAX(id) FROM "user"));

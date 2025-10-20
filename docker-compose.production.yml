@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  app:
+    image: ghcr.io/dalmosantos/java-spring-boot:latest
+    container_name: spring-course-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=production
+      - DATABASE_URL=jdbc:postgresql://db:5432/springcourse
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=${DB_PASSWORD:-postgres}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme}
+      - JAVA_OPTS=-Xms256m -Xmx512m
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - spring-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  db:
+    image: postgres:15-alpine
+    container_name: spring-course-db
+    environment:
+      - POSTGRES_DB=springcourse
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./spring_course_postgres.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - spring-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Opcional: Nginx como reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: spring-course-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+    networks:
+      - spring-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  spring-network:
+    driver: bridge
