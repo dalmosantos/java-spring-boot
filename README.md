@@ -88,3 +88,16 @@ Developed by<br>
 Danilo Meneghel<br>
 danilo.meneghel@gmail.com<br>
 http://danilomeneghel.github.io/<br>
+
+## Java runtime
+
+This project has been upgraded to require Java 21 (current LTS). To build and run the project you need JDK 21 installed and available to Maven.
+
+Set JAVA_HOME to your JDK 21 installation, for example on Linux:
+
+```
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+export PATH="$JAVA_HOME/bin:$PATH"
+```
+
+If you use Maven toolchains or a different JDK installation path, configure your environment or Maven accordingly.

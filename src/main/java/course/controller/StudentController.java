@@ -15,7 +15,7 @@ import course.entity.Student;
 import course.entity.Course;
 import course.service.StudentServiceImpl;
 import course.service.CourseServiceImpl;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
