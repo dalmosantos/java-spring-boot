@@ -1,5 +1,11 @@
 # Spring Boot Course Management System
 
+[![Build and Test](https://github.com/dalmosantos/java-spring-boot/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/dalmosantos/java-spring-boot/actions/workflows/build-and-test.yml)
+[![Docker Build](https://github.com/dalmosantos/java-spring-boot/actions/workflows/docker-build-push.yml/badge.svg)](https://github.com/dalmosantos/java-spring-boot/actions/workflows/docker-build-push.yml)
+[![Java Version](https://img.shields.io/badge/Java-21-orange)](https://openjdk.org/projects/jdk/21/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.4-brightgreen)](https://spring.io/projects/spring-boot)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 A modern course registration and management system built with Spring Boot 3, Java 21, and containerized with Docker.
 
 ## Features
@@ -321,6 +327,45 @@ docker-compose -f docker-compose.yml up -d
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🚀 CI/CD and Deployment
+
+This project includes comprehensive GitHub Actions workflows for continuous integration and deployment:
+
+### Available Workflows
+
+- **Build and Test** - Automatic testing and building on every push/PR
+- **Docker Build and Push** - Automated Docker image building and publishing to GitHub Container Registry
+- **Deploy** - Manual deployment to different environments (dev/staging/production)
+- **Release** - Automated release creation when tags are pushed
+
+### Quick Start with CI/CD
+
+```bash
+# Build and test automatically triggered on push
+git push origin main
+
+# Create a release
+git tag -a v1.0.0 -m "Release v1.0.0"
+git push origin v1.0.0
+
+# Deploy manually via GitHub Actions UI
+# Go to Actions → Deploy Application → Run workflow
+```
+
+### Pull Docker Image
+
+```bash
+# Pull the latest image
+docker pull ghcr.io/dalmosantos/java-spring-boot:latest
+
+# Run the container
+docker run -p 8080:8080 ghcr.io/dalmosantos/java-spring-boot:latest
+```
+
+For detailed deployment instructions, see:
+- 📖 [Deployment Guide](.github/DEPLOYMENT_GUIDE.md) - Complete guide for deployment
+- 🛠️ [Commands Reference](.github/COMMANDS.md) - Useful commands and scripts
 
 ## Contact
 
