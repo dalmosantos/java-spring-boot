@@ -1,22 +1,19 @@
 package course;
 
-import org.junit.Test;
-import org.junit.runner.*;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import course.entity.Student;
 import course.repository.StudentRepository;
 import course.entity.User;
 import course.repository.UserRepository;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 public class CrudbootApplicationTests {
 

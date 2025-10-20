@@ -1,9 +1,10 @@
 package course.entity;
 
-import javax.validation.constraints.Size;
-import javax.persistence.*;
+import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "\"user\"")
 public class User {
 
     @Id

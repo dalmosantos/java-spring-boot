@@ -1,0 +1,35 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ main, develop, upgrade-java-21-spring-boot-3 ]
+  pull_request:
+    branches: [ main, develop, upgrade-java-21-spring-boot-3 ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+    
+    - name: Build with Maven
+      run: mvn -B clean package --file pom.xml
+    
+    - name: Run tests
+      run: mvn test
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      if: success()
+      with:
+        name: spring-course-jar
+        path: target/*.jar
+        retention-days: 7
