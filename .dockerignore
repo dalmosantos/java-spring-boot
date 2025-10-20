@@ -1,0 +1,12 @@
+target/
+!target/spring-course-1.0.jar
+.git
+.gitignore
+*.md
+.mvn/wrapper/maven-wrapper.jar
+.idea
+*.iml
+.vscode
+.DS_Store
+screenshots/
+*.log
